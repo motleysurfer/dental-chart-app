@@ -251,7 +251,7 @@ def draw_dental_chart(maxillary_missing, maxillary_implant, maxillary_extracted,
     def draw_root_canal(ax, x, y, color='saddlebrown'):
         ax.plot([x, x], [y - 0.15, y + 0.6], color=color, linewidth=3)
 
-    def draw_filling(ax, x, y, is_maxillary=True, color='darkorange'):
+ def draw_filling(ax, x, y, is_maxillary=True, color='darkorange'):
     # For maxillary teeth, draw the filling at the top
     # For mandibular teeth, draw the filling at the bottom
     if is_maxillary:
