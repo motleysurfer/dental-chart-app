@@ -397,7 +397,7 @@ with col2:
 # Handle reset button
 if reset_button:
     st.session_state.reset_requested = True
-    st.experimental_rerun()
+    st.rerun()
 
 # Generate chart when button is clicked
 if generate_button:
