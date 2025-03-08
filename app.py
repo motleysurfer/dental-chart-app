@@ -251,9 +251,14 @@ def draw_dental_chart(maxillary_missing, maxillary_implant, maxillary_extracted,
     def draw_root_canal(ax, x, y, color='saddlebrown'):
         ax.plot([x, x], [y - 0.15, y + 0.6], color=color, linewidth=3)
 
-    def draw_filling(ax, x, y, color='darkorange'):
+    def draw_filling(ax, x, y, is_maxillary=True, color='darkorange'):
+    # For maxillary teeth, draw the filling at the top
+    # For mandibular teeth, draw the filling at the bottom
+    if is_maxillary:
         fill_circle = plt.Circle((x, y + 0.9), 0.08, color=color, fill=False, linewidth=2)
-        ax.add_patch(fill_circle)
+    else:
+        fill_circle = plt.Circle((x, y - 0.4), 0.08, color=color, fill=False, linewidth=2)
+    ax.add_patch(fill_circle)
 
     for arch, positions in zip(["maxillary", "mandibular"], [maxillary_positions, mandibular_positions]):
         ax = axs[0] if arch == "maxillary" else axs[1]
@@ -277,8 +282,10 @@ def draw_dental_chart(maxillary_missing, maxillary_implant, maxillary_extracted,
                 
             if num in dental_modifications[arch]["rct"]:
                 draw_root_canal(ax, x, y, color='saddlebrown')
+                
             if num in dental_modifications[arch]["filling"]:
-                draw_filling(ax, x, y, color='darkorange')
+                draw_filling(ax, x, y, is_maxillary=is_maxillary, color='darkorange')
+                
             if num in dental_modifications[arch]["crown"]:
                 draw_crown(ax, x, y, is_maxillary=is_maxillary, color='purple')
             ax.text(x, y - 1.0 if arch == "maxillary" else y + 1.0, str(num), fontsize=12, ha='center', va='center', color='black')
