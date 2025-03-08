@@ -379,12 +379,13 @@ with col2:
 
 # Handle reset button
 if reset_button:
-    # Reset all form fields by setting session state to empty
+    # Reset all form fields by re-initializing session state values
     for key in ['max_missing', 'max_implant', 'max_extracted', 'max_crown', 
                 'max_rct', 'max_filling', 'max_bridge',
                 'mand_missing', 'mand_implant', 'mand_extracted', 'mand_crown',
                 'mand_rct', 'mand_filling', 'mand_bridge']:
-        st.session_state[key] = ""
+        if key in st.session_state:
+            st.session_state[key] = ""
     st.success("All fields have been reset!")
     st.experimental_rerun()
 
