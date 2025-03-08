@@ -3,6 +3,23 @@ import matplotlib.pyplot as plt
 import numpy as np
 import io
 
+# Initialize session state for form fields if not already present
+if 'reset_requested' not in st.session_state:
+    st.session_state.reset_requested = False
+
+# Add this before the form fields are created
+if st.session_state.reset_requested:
+    # Reset the state before widgets are rendered
+    for key in ['max_missing', 'max_implant', 'max_extracted', 'max_crown', 
+               'max_rct', 'max_filling', 'max_bridge',
+               'mand_missing', 'mand_implant', 'mand_extracted', 'mand_crown',
+               'mand_rct', 'mand_filling', 'mand_bridge']:
+        st.session_state[key] = ""
+    # Reset the flag
+    st.session_state.reset_requested = False
+
+
+
 st.set_page_config(page_title="Dental Chart Generator", layout="wide")
 
 # Set up the page
@@ -379,14 +396,7 @@ with col2:
 
 # Handle reset button
 if reset_button:
-    # Reset all form fields by re-initializing session state values
-    for key in ['max_missing', 'max_implant', 'max_extracted', 'max_crown', 
-                'max_rct', 'max_filling', 'max_bridge',
-                'mand_missing', 'mand_implant', 'mand_extracted', 'mand_crown',
-                'mand_rct', 'mand_filling', 'mand_bridge']:
-        if key in st.session_state:
-            st.session_state[key] = ""
-    st.success("All fields have been reset!")
+    st.session_state.reset_requested = True
     st.experimental_rerun()
 
 # Generate chart when button is clicked
